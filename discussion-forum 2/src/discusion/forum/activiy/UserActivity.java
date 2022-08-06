@@ -77,7 +77,7 @@ public class UserActivity {
 		// Please write code that follows the instruction below
 		// 1. Use Utility.inputFromUser() to get the question body that the user entered
 		// 2. Store the question body in a String variable called message
-
+		String message = Utility.inputFromUser();
 		questionService.createQuestion(title, message, user);
 	}
 
@@ -106,7 +106,7 @@ public class UserActivity {
 		// The code for printing out "No question posted yet" and information about the question
 		// has been written for you. You simply need to replace the ... in the if statement condition.
 
-		if ( ... ) {
+		if (questions.size() == 0) {
 			System.out.println("No question posted yet");
 		} else {
 			sort(questions); // sorting the questions from the newest to the oldest
@@ -190,7 +190,18 @@ public class UserActivity {
 		}
 		// Write else if condition to check if the user is a moderator
 		// Write else if condition to check if the user is a regular user
-
+		else if (user.getUserRole() == UserRole.MODERATOR) { // the user is an moderator
+			//condition for deleting a question
+			if(user.getUserRole() == UserRole.USER || question.getUser()==user){
+				questionService.deleteQuestion(question); // deleting a question
+			}else{
+				System.out.println("You are not authorised to delete this question");
+			}
+		} else if(question.getUser() == user){ //the user is a regular user
+			questionService.deleteQuestion(question); // deleting a question
+		}else{
+			System.out.println("You are not authorised to delete this question");
+		}
 
 		if (QuestionServiceImpl.questions.size() == 0)
 			DiscussionForum.menu(user, userActivity);

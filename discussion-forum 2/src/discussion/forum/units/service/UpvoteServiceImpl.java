@@ -56,7 +56,7 @@ public class UpvoteServiceImpl implements UpvoteService {
 			  Change the below if condition such that user can not upvote the same question or same reply twice,
 			  but can upvote multiple questions and replies
 			*/
-			if ((upvote.getUser() == user) && ((upvote.getQuestion() == question) || (upvote.getReply() == reply))) {
+			if ((upvote.getUser() == user) && ((upvote.getQuestion() == question) && (upvote.getReply() == reply))) {
 				return upvote;
 			}
 		}
